@@ -1,19 +1,23 @@
 (function() {
+    const themeScriptPath = window.location.pathname.includes('/posts/') ? '../js/theme-changer.js' : './js/theme-changer.js';
+    const themeXhr = new XMLHttpRequest();
+    themeXhr.open('GET', themeScriptPath, false);
+    themeXhr.send();
+    if (themeXhr.status == 200) {
+        const themeScript = document.createElement('script');
+        themeScript.textContent = themeXhr.responseText;
+        document.head.appendChild(themeScript);
+    }
+
     const cssPath = window.location.pathname.includes('/posts/') ? '../css/style.css' : './css/style.css';
     const xhr = new XMLHttpRequest();
     xhr.open('GET', cssPath, false);
     xhr.send();
-    
     if (xhr.status == 200) {
         const style = document.createElement('style');
         style.textContent = xhr.responseText;
         document.head.appendChild(style);
     }
-    
-    const themeScriptPath = window.location.pathname.includes('/posts/') ? '../js/theme-changer.js' : './js/theme-changer.js';
-    const themeScript = document.createElement('script');
-    themeScript.src = themeScriptPath;
-    document.head.appendChild(themeScript);
 
     const codeCopyScriptPath = window.location.pathname.includes('/posts/') ? '../js/code-copy.js' : './js/code-copy.js';
     const codeCopyScript = document.createElement('script');

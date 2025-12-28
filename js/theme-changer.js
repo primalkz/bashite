@@ -14,9 +14,17 @@ class ThemeChanger {
     }
 
     init(){
-        this.createThemeChanger();
         this.applyTheme(this.currentTheme);
-        this.setupEventListeners();
+        
+        if (document.readyState == 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.createThemeChanger();
+                this.setupEventListeners();
+            });
+        } else {
+            this.createThemeChanger();
+            this.setupEventListeners();
+        }
     }
 
     createThemeChanger() {
@@ -72,11 +80,4 @@ class ThemeChanger {
         return this.themes.includes(saved) ? saved : 'dark';
     }
 }
-
-if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        new ThemeChanger();
-    });
-} else {
-    new ThemeChanger();
-}
+new ThemeChanger();
